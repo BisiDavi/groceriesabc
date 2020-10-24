@@ -1,40 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface Menu {
   id: number;
   name: string;
   price: number;
+  count: number;
+  cost: number;
 }
 
 const Sidebar = (): JSX.Element => {
-  const menuList: Menu[] = [
-    { id: 1, name: "Apple", price: 100 },
-    { id: 2, name: "Indomie", price: 200 },
-    { id: 3, name: "Orange", price: 50 },
-    { id: 4, name: "Pringle", price: 500 },
-    { id: 5, name: "Wine", price: 2000 }
-  ];
+  const [groceriesData, setGroceriesData] = useState<Menu[]>([
+    { id: 0, name: "Apple", price: 100, count: 0, cost: 0 },
+    { id: 1, name: "Indomie", price: 200, count: 0, cost: 0 },
+    { id: 2, name: "Orange", price: 50, count: 0, cost: 0 },
+    { id: 3, name: "Pringle", price: 500, count: 0, cost: 0 },
+    { id: 4, name: "Wine", price: 2000, count: 0, cost: 0 }
+  ]);
+
+  const increaseCount = (index: number): any => {
+    const storeData: Menu[] = [...groceriesData];
+    let count: number = storeData[index].count + 1;
+    let cost: number = storeData[index].price * count;
+    storeData[index] = { ...storeData[index], count, cost };
+    setGroceriesData([...storeData]);
+  };
+
+  const decreaseCount = (index: number): any => {
+    const storeData: Menu[] = [...groceriesData];
+    if (storeData[index].count > 0) {
+      let count: number = storeData[index].count - 1;
+      let cost: number = storeData[index].price * count;
+      storeData[index] = { ...storeData[index], count, cost };
+      setGroceriesData([...storeData]);
+    }
+  };
+
   return (
     <div className="sidebar">
       <h3>Menu</h3>
       <ul className="list-group">
-        {menuList.map(list => (
+        {groceriesData.map(grocery => (
           <li
             className="list-group-item d-flex justify-content-around align-items-center"
-            key={list.id}
+            key={grocery.id}
           >
-            <div className="price bg-dark text-white float-left">
-              N {list.price}
+            <div className="cost bg-dark text-white float-left">
+              N {grocery.cost}
             </div>
             <div className="controls d-flex justify-content-between align-items-center">
-              <button className="addButton font-weight-bold bg-success border-0">
+              <button
+                onClick={() => increaseCount(grocery.id)}
+                className="addButton font-weight-bold bg-success border-0"
+              >
                 +
               </button>
-              <h4>{list.name}</h4>
-              <button className="subtractButton font-weight-bold bg-danger border-0">
+              <h4>{grocery.name}</h4>
+              <span className="number badge badge-primary badge-pill">
+                {grocery.count}
+              </span>
+              <button
+                onClick={() => decreaseCount(grocery.id)}
+                className="subtractButton font-weight-bold bg-danger border-0"
+              >
                 -
               </button>
-              <span className="number badge badge-primary badge-pill">0</span>
+              <div className="price bg-dark text-white float-left">
+                N {grocery.price}
+              </div>
             </div>
           </li>
         ))}
@@ -69,21 +101,38 @@ const Sidebar = (): JSX.Element => {
           }
           .list-group span.number {
             position: absolute;
-            right: 80px;
-            top: 5px;
+            right: 120px;
+            top: 2px;
+            background: rgb(20, 10, 200) !important;
           }
-          .list-group div.price {
+          .list-group div.cost {
             height: 50px;
             position: absolute;
             left: 0;
             align-content: center;
             display: flex;
             align-items: center;
-            width: 55px;
+            width: 61px;
+            padding: 5px;
+            background: rgb(20, 10, 80) !important;
+          }
+          .list-group div.price {
+            height: 50px;
+            position: absolute;
+            right: 0;
+            align-content: center;
+            display: flex;
+            align-items: center;
+            width: 61px;
+            padding: 5px;
+            background: rgb(20, 10, 80) !important;
           }
           .controls {
-            width: 85%;
-            margin-left: 50px;
+            width: 60%;
+            margin-left: 0px;
+          }
+          .controls h4 {
+            font-size: 18px;
           }
         `}
       </style>
