@@ -1,17 +1,27 @@
 import React from "react";
+import Head from "next/head";
 
 const Layout = ({ children }): JSX.Element => {
   return (
     <>
       <div className="appLayout">
+        <Head>
+          <title>Welcome | Groceries store</title>
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossOrigin="anonymous"
+          />
+        </Head>
         <header className="header">
           <p>
             Welcome to
-            <span className="siteTitle"> Iya Tawa Olounje</span>
+            <span className="siteTitle"> ABC Groceries Store</span>
           </p>
         </header>
         {children}
-        <footer className="footer">Copyright Iya Tawa Olounje© 2020</footer>
+        <footer className="footer">Copyright ABC Groceries© 2020</footer>
       </div>
       <style jsx>
         {`
@@ -31,6 +41,7 @@ const Layout = ({ children }): JSX.Element => {
             display: flex;
             margin: auto;
             font-weight: bold;
+            margin-left: 350px;
             font-size: 25px;
           }
           .siteTitle {
@@ -44,7 +55,7 @@ const Layout = ({ children }): JSX.Element => {
           }
           .footer {
             position: fixed;
-            left: 32%;
+            left: 23%;
             font-style: italic;
             font-size: 30px;
             bottom: 20px;

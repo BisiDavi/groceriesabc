@@ -1,4 +1,9 @@
 export { default as Layout } from "../components/layout";
 export { default as Sidebar } from "../components/sidebar";
-export { default as tableImg } from "../assets/table.png";
+export { default as CartImg } from "../assets/cart.png";
+export { default as appleImg } from "../assets/apple.png";
+export { default as indomieImg } from "../assets/indomie.png";
+export { default as moetImg } from "../assets/moet.png";
+export { default as orangeImg } from "../assets/orange.png";
+export { default as pringlesImg } from "../assets/pringles.png";
 export { default as MainContent } from "../components/main";

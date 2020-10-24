@@ -1,10 +1,20 @@
 import React from "react";
-import { tableImg } from "../imports";
+import { CartImg } from "../imports";
 
 const MainContent = (): JSX.Element => {
   return (
     <div className="main-app">
-      <img src={tableImg} alt="content-table" />
+      <img src={CartImg} alt="content-table" />
+
+      <style jsx>
+        {`
+          .main-app img {
+            width: 25% !important;
+            margin-top: 150px;
+            margin-left: 360px;
+          }
+        `}
+      </style>
     </div>
   );
 };
