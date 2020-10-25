@@ -12,24 +12,21 @@
 }
 
 .groceryimages .appleImg {
-  margin-left: 100px;
-}
-
-.indomieImg {
-  margin-left: 150px;
-}
-
-.groceryimages .orangeImg {
-  margin-left: 120px;
-}
-
-.pringlesImg {
-  margin-left: 110px;
-  top: 20px;
+  width: 50px !important;
+  top: 240px;
+  left: 190px;
   position: absolute;
 }
 
-.moetImg {
-  margin-left: 200px;
-  margin-top: -20px;
+.groceryimages .orangeImg {
+  width: 50px !important;
+  position: absolute;
+  top: 180px;
+  left: 130px;
+}
+
+.groceryimages .pringlesImg {
+  left: 210px;
+  top: 70px;
+  position: absolute;
 }

@@ -13,9 +13,8 @@ interface Menu {
 const Sidebar = (): JSX.Element => {
   const [groceriesData, setGroceriesData] = useState<Menu[]>([
     { id: 0, name: "Apple", price: 100, count: 0, cost: 0 },
-    { id: 2, name: "Orange", price: 50, count: 0, cost: 0 },
-    { id: 3, name: "Pringle", price: 500, count: 0, cost: 0 },
-    { id: 4, name: "Wine", price: 2000, count: 0, cost: 0 }
+    { id: 1, name: "Orange", price: 50, count: 0, cost: 0 },
+    { id: 2, name: "Pringle", price: 500, count: 0, cost: 0 }
   ]);
 
   const displayItem = (index: number): JSX.Element => {
@@ -26,8 +25,6 @@ const Sidebar = (): JSX.Element => {
         return <img className={style.orangeImg} src={orange} />;
       case "Pringle":
         return <img className={style.pringlesImg} src={pringles} />;
-      case "Wine":
-        return <img className={style.moetImg} src={moet} />;
       default:
         break;
     }
