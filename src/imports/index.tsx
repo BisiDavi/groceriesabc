@@ -1,9 +1,9 @@
 export { default as Layout } from "../components/layout";
 export { default as Sidebar } from "../components/sidebar";
 export { default as CartImg } from "../assets/cart.png";
-export { default as appleImg } from "../assets/apple.png";
-export { default as indomieImg } from "../assets/indomie.png";
-export { default as moetImg } from "../assets/moet.png";
-export { default as orangeImg } from "../assets/orange.png";
-export { default as pringlesImg } from "../assets/pringles.png";
+export { default as apple } from "../assets/apple.png";
+export { default as indomie } from "../assets/indomie.png";
+export { default as moet } from "../assets/moet.png";
+export { default as orange } from "../assets/orange.png";
+export { default as pringles } from "../assets/pringles.png";
 export { default as MainContent } from "../components/main";

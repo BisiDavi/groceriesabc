@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { apple, indomie, moet, orange, pringles } from "../imports";
+import style from "../styles/sidebar.module.css";
 
 interface Menu {
   id: number;
@@ -16,6 +18,32 @@ const Sidebar = (): JSX.Element => {
     { id: 3, name: "Pringle", price: 500, count: 0, cost: 0 },
     { id: 4, name: "Wine", price: 2000, count: 0, cost: 0 }
   ]);
+
+  const displayItem = (index: number): JSX.Element => {
+    switch (groceriesData[index].name) {
+      case "Apple":
+        return <img className={`${style.appleImg} item`} src={apple} />;
+      case "Indomie":
+        return <img className={`${style.indomieImg} item`} src={indomie} />;
+      case "Orange":
+        return <img className={`${style.orangeImg} item`} src={orange} />;
+      case "Pringle":
+        return <img className={`${style.pringlesImg} item`} src={pringles} />;
+      case "Wine":
+        return <img className={`${style.moetImg} item`} src={moet} />;
+      default:
+        break;
+    }
+    return (
+      <style jsx>
+        {`
+          .groceryimages .item {
+            width: 100px !important;
+          }
+        `}
+      </style>
+    );
+  };
 
   const increaseCount = (index: number): any => {
     const storeData: Menu[] = [...groceriesData];
@@ -38,6 +66,7 @@ const Sidebar = (): JSX.Element => {
   return (
     <div className="sidebar">
       <h3>Menu</h3>
+      {}
       <ul className="list-group">
         {groceriesData.map(grocery => (
           <li
@@ -68,9 +97,12 @@ const Sidebar = (): JSX.Element => {
                 N {grocery.price}
               </div>
             </div>
+            <div className={style.groceryimages}>{displayItem(grocery.id)}</div>
           </li>
         ))}
       </ul>
+      <button className="btn btn-outline-success m-auto">Order</button>
+
       <style jsx>
         {`
           .sidebar {
@@ -133,6 +165,16 @@ const Sidebar = (): JSX.Element => {
           }
           .controls h4 {
             font-size: 18px;
+          }
+          .groceryimages {
+            position: absolute;
+            left: -220%;
+          }
+          .groceryimages .item {
+            width: 100px !important;
+          }
+          .item {
+            width: 100px !important;
           }
         `}
       </style>

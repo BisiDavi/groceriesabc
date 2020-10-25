@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import MainContent from "../components/main";
 import { Layout, Sidebar } from "../imports";
 
@@ -6,7 +8,7 @@ const Homepage = (): JSX.Element => {
     <div className="homepage">
       <Layout>
         <Sidebar />
-        <MainContent/>
+        <MainContent />
       </Layout>
     </div>
   );

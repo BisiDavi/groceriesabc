@@ -1,0 +1,12 @@
+.groceryimages {
+  position: absolute;
+  left: -220%;
+}
+
+.groceryimages img{
+  width: 100px !important;
+}
+
+.item {
+  width: 100px !important;
+}
