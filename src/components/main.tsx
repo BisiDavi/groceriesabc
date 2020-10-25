@@ -2,7 +2,6 @@ import React from "react";
 import { CartImg } from "../imports";
 
 const MainContent = (): JSX.Element => {
-
   /* const displayItem = (index: number): JSX.Element => {
     console.log("displayItem executed");
     switch (groceriesData[index].name) {
@@ -31,6 +30,8 @@ const MainContent = (): JSX.Element => {
             width: 25% !important;
             margin-top: 150px;
             margin-left: 360px;
+            z-index: 1000;
+            position: absolute;
           }
         `}
       </style>

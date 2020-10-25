@@ -3,10 +3,33 @@
   left: -220%;
 }
 
-.groceryimages img{
+.groceryimages img {
   width: 100px !important;
 }
 
 .item {
   width: 100px !important;
+}
+
+.groceryimages .appleImg {
+  margin-left: 100px;
+}
+
+.indomieImg {
+  margin-left: 150px;
+}
+
+.groceryimages .orangeImg {
+  margin-left: 120px;
+}
+
+.pringlesImg {
+  margin-left: 110px;
+  top: 20px;
+  position: absolute;
+}
+
+.moetImg {
+  margin-left: 200px;
+  margin-top: -20px;
 }

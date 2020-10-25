@@ -13,7 +13,6 @@ interface Menu {
 const Sidebar = (): JSX.Element => {
   const [groceriesData, setGroceriesData] = useState<Menu[]>([
     { id: 0, name: "Apple", price: 100, count: 0, cost: 0 },
-    { id: 1, name: "Indomie", price: 200, count: 0, cost: 0 },
     { id: 2, name: "Orange", price: 50, count: 0, cost: 0 },
     { id: 3, name: "Pringle", price: 500, count: 0, cost: 0 },
     { id: 4, name: "Wine", price: 2000, count: 0, cost: 0 }
@@ -22,15 +21,13 @@ const Sidebar = (): JSX.Element => {
   const displayItem = (index: number): JSX.Element => {
     switch (groceriesData[index].name) {
       case "Apple":
-        return <img className={`${style.appleImg} item`} src={apple} />;
-      case "Indomie":
-        return <img className={`${style.indomieImg} item`} src={indomie} />;
+        return <img className={style.appleImg} src={apple} />;
       case "Orange":
-        return <img className={`${style.orangeImg} item`} src={orange} />;
+        return <img className={style.orangeImg} src={orange} />;
       case "Pringle":
-        return <img className={`${style.pringlesImg} item`} src={pringles} />;
+        return <img className={style.pringlesImg} src={pringles} />;
       case "Wine":
-        return <img className={`${style.moetImg} item`} src={moet} />;
+        return <img className={style.moetImg} src={moet} />;
       default:
         break;
     }
