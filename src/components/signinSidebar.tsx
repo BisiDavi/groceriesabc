@@ -3,7 +3,16 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
 import style from "../styles/sidebar.module.css";
 
-const SigninSidebar = (): JSX.Element => {
+interface ISigninform {
+  email: string;
+  password: string;
+}
+
+const SigninSidebar: React.FC<{}> = (): JSX.Element => {
+  const initialValues: ISigninform = {
+    email: "",
+    password: ""
+  };
   async function handleLogin() {
     const resp = await fetch("http:localhost:3000/api/login", {
       method: "POST",
@@ -21,9 +30,9 @@ const SigninSidebar = (): JSX.Element => {
     <div className={style.sidebar}>
       <h3>Sign-in</h3>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={initialValues}
         validate={values => {
-          const errors:any = {};
+          const errors: any = {};
           if (!values.email) {
             errors.email = "Email Required";
           } else if (
@@ -41,24 +50,7 @@ const SigninSidebar = (): JSX.Element => {
         }}
       >
         {({ isSubmitting }) => (
-          <Form className={`${style.form} signin-form p-3 bg-dark`}>
-            <div className="form-group">
-              <label
-                className="float-left text-white"
-                htmlFor="exampleInputUsername"
-              >
-                Username
-              </label>
-              <Field
-                type="text"
-                name="name"
-                className="form-control"
-                id="exampleInputUsername"
-                aria-describedby="emailHelp"
-                placeholder="Enter your username"
-              />
-              <ErrorMessage name="name" component="div" />
-            </div>
+          <Form className={`${style.form} signin-form p-3 bg-dark`}>            
             <div className="form-group">
               <label
                 className="float-left text-white"

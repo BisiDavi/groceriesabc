@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import * as Yup from "yup";
-import {
-  Formik,
-  FormikErrors,
-  FormikProps,
-  Form,
-  Field,
-  FieldProps
-} from "formik";
+import { Formik, ErrorMessage, Form, Field, FieldProps } from "formik";
 import style from "../styles/sidebar.module.css";
 
 interface ISignupform {
@@ -28,68 +20,89 @@ const SignupSidebar: React.FC<{}> = () => {
       <h3>Sign-up</h3>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, actions) => {
-          console.log({ values, actions });
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
+        validate={values => {
+          const errors: any = {};
+          if (!values.email) {
+            errors.email = "Email Required";
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = "Invalid email Address";
+          }
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
         }}
       >
-        <Form className={`${style.form} signup-form p-3 bg-dark`}>
-          <div className="form-group">
-            <label
-              className="float-left text-white"
-              htmlFor="exampleInputEmail1"
-            >
-              Username
-            </label>
-            <Field
-              name="username"
-              type="name"
-              className="form-control"
-              id="exampleInputname"
-              aria-describedby="nameHelp"
-              placeholder="Enter username"
-            />
-          </div>
-          <div className="form-group">
-            <label
-              className="float-left text-white"
-              htmlFor="exampleInputEmail1"
-            >
-              Email address
-            </label>
-            <Field
-              name="email"
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-            />
-            <small id="emailHelp" className="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small>
-          </div>
-          <div className="form-group">
-            <label
-              className="float-left text-white"
-              htmlFor="exampleInputPassword1"
-            >
-              Password
-            </label>
-            <Field
-              name="password"
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Password"
-            />
-          </div>
+        {({ isSubmitting }) => (
+          <Form className={`${style.form} signup-form p-3 bg-dark`}>
+            <div className="form-group">
+              <label
+                className="float-left text-white"
+                htmlFor="exampleInputEmail1"
+              >
+                Username
+              </label>
+              <Field
+                name="username"
+                type="name"
+                className="form-control"
+                id="exampleInputname"
+                aria-describedby="nameHelp"
+                placeholder="Enter username"
+              />
+              <ErrorMessage name="username" component="div" />
+            </div>
+            <div className="form-group">
+              <label
+                className="float-left text-white"
+                htmlFor="exampleInputEmail1"
+              >
+                Email address
+              </label>
+              <Field
+                name="email"
+                type="email"
+                className="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+              />
+              <ErrorMessage name="email" component="div" />
+              <small id="emailHelp" className="form-text text-muted">
+                We'll never share your email with anyone else.
+              </small>
+            </div>
+            <div className="form-group">
+              <label
+                className="float-left text-white"
+                htmlFor="exampleInputPassword1"
+              >
+                Password
+              </label>
+              <Field
+                name="password"
+                type="password"
+                className="form-control"
+                id="exampleInputPassword1"
+                placeholder="Password"
+              />
+              <ErrorMessage name="password" component="div" />
+            </div>
 
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </Form>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn btn-primary"
+            >
+              Submit
+            </button>
+          </Form>
+        )}
       </Formik>
 
       <div className="alternative mt-3 mb-5">
