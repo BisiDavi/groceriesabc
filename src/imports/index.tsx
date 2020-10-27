@@ -7,3 +7,5 @@ export { default as moet } from "../assets/moet.png";
 export { default as orange } from "../assets/orange.png";
 export { default as pringles } from "../assets/pringles.png";
 export { default as MainContent } from "../components/main";
+export { default as SigninSidebar } from "../components/signinSidebar";
+export { default as SignupSidebar } from "../components/signupSidebar";

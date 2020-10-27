@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { apple, indomie, moet, orange, pringles } from "../imports";
+import Link from "next/link";
+import { apple, orange, pringles } from "../imports";
 import style from "../styles/sidebar.module.css";
 
 interface Menu {
@@ -60,7 +61,6 @@ const Sidebar = (): JSX.Element => {
   return (
     <div className="sidebar">
       <h3>Menu</h3>
-      {}
       <ul className="list-group">
         {groceriesData.map(grocery => (
           <li
@@ -96,7 +96,16 @@ const Sidebar = (): JSX.Element => {
         ))}
       </ul>
       <button className="btn btn-outline-success m-auto">Order</button>
-
+      <div className="signup-login mt-5">
+        <div className="d-flex m-auto">
+          <Link href="/auth/signup">
+            <a className="btn btn-outline-danger w-25">Sign up</a>
+          </Link>
+          <Link href="/auth/signin">
+            <a className="btn btn-outline-primary w-25">Sign in</a>
+          </Link>
+        </div>
+      </div>
       <style jsx>
         {`
           .sidebar {
