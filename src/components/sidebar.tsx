@@ -100,7 +100,7 @@ const Sidebar = (): JSX.Element => {
           </li>
         ))}
       </ul>
-      <OrderModal modalClose={handleClose} />
+      <OrderModal modalShow={show} modalClose={handleClose} />
       <button onClick={handleShow} className="btn btn-outline-success m-auto">
         Order
       </button>
