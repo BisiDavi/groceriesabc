@@ -48,3 +48,7 @@
   width: 170px;
   margin: 20px auto;
 }
+
+form.form {
+  margin-top: -6px !important;
+}

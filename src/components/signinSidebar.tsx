@@ -6,7 +6,7 @@ const SigninSidebar = (): JSX.Element => {
   return (
     <div className={style.sidebar}>
       <h3>Sign-in</h3>
-      <form className="signin-form p-3 bg-dark">
+      <form className={`${style.form} signin-form p-3 bg-dark`}>
         <div className="form-group">
           <label
             className="float-left text-white"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { apple, orange, pringles } from "../imports";
+import { apple, orange, pringles, OrderModal } from "../imports";
 import style from "../styles/sidebar.module.css";
 
 interface Menu {
@@ -17,6 +17,11 @@ const Sidebar = (): JSX.Element => {
     { id: 1, name: "Orange", price: 50, count: 0, cost: 0 },
     { id: 2, name: "Pringle", price: 500, count: 0, cost: 0 }
   ]);
+
+  const [show, setShow] = useState<boolean>(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const displayItem = (index: number): JSX.Element => {
     switch (groceriesData[index].name) {
@@ -95,9 +100,12 @@ const Sidebar = (): JSX.Element => {
           </li>
         ))}
       </ul>
-      <button className="btn btn-outline-success m-auto">Order</button>
+      <OrderModal modalClose={handleClose} />
+      <button onClick={handleShow} className="btn btn-outline-success m-auto">
+        Order
+      </button>
       <div className="signup-login mt-5">
-        <div className="d-flex m-auto">
+        <div className="d-flex justify-content-around m-auto">
           <Link href="/auth/signup">
             <a className="btn btn-outline-danger w-25">Sign up</a>
           </Link>

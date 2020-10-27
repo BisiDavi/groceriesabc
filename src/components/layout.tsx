@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 
 const Layout = ({ children }): JSX.Element => {
   return (
@@ -17,7 +18,11 @@ const Layout = ({ children }): JSX.Element => {
         <header className="header">
           <p>
             Welcome to
-            <span className="siteTitle"> ABC Groceries Store</span>
+            <span className="siteTitle">
+              <Link href="/">
+                <a className="text-decoration-none">ABC Groceries Store</a>
+              </Link>
+            </span>
           </p>
         </header>
         {children}

@@ -6,7 +6,7 @@ const SignupSidebar = (): JSX.Element => {
   return (
     <div className={style.sidebar}>
       <h3>Sign-up</h3>
-      <form className="signin-form p-3 bg-dark">
+      <form className={`${style.form} signup-form p-3 bg-dark`}>
         <div className="form-group">
           <label className="float-left text-white" htmlFor="exampleInputEmail1">
             Email address
@@ -23,7 +23,10 @@ const SignupSidebar = (): JSX.Element => {
           </small>
         </div>
         <div className="form-group">
-          <label className="float-left text-white" htmlFor="exampleInputPassword1">
+          <label
+            className="float-left text-white"
+            htmlFor="exampleInputPassword1"
+          >
             Password
           </label>
           <input
