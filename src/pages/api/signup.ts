@@ -15,7 +15,11 @@ export default async function signup(
     case "POST":
       try {
         hash(req.body.password, 10, async function (err, hash) {
-          const user = await User.create(req.body.name, req.body.email, hash);
+          const user = await User.create(
+            req.body.name,
+            req.body.email,
+            req.body.password
+          );
           res.status(201).json({ success: true, data: user });
         });
       } catch (error) {

@@ -1,5 +1,4 @@
 import React from "react";
-
 import MainContent from "../../components/main";
 import { Layout, SigninSidebar } from "../../imports";
 
