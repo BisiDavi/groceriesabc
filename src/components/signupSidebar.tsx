@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { Formik, ErrorMessage, Form, Field, FieldProps } from "formik";
+import { Formik, ErrorMessage, Form, Field } from "formik";
 import style from "../styles/sidebar.module.css";
+import ToastNotification from "./toast";
 
 interface ISignupform {
   name: string;
@@ -31,12 +32,14 @@ const SignupSidebar: React.FC<{}> = () => {
   return (
     <div className={style.sidebar}>
       <h3>Sign-up</h3>
-      {message === "null" ? (
+      {JSON.stringify(message) === "null" ? (
         <div className="d-none">{JSON.stringify(message)}</div>
       ) : (
         <div className="signed">
-          Hi {JSON.stringify(message)},Thanks for signing in, you will be
-          redirected to login page.
+          <ToastNotification
+            toastText={`Hi ${message.name},Thanks for signing in, you will be redirected to
+          login page.`}
+          />
         </div>
       )}
       <Formik
@@ -130,7 +133,7 @@ const SignupSidebar: React.FC<{}> = () => {
                 className="font-weight-bold text-danger"
                 name="password"
                 component="div"
-              />
+              /> 
             </div>
 
             <button

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
-import style from "../styles/sidebar.module.css";
+import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
+import "react-toastify/dist/ReactToastify.css";
+import style from "../styles/sidebar.module.css";
+import ToastNotification from "./toast";
 
 interface ISigninform {
   email: string;
@@ -40,16 +43,18 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
     });
     // if (resp) loadAdminPage();
     const formJson = await resp.json();
-    setUseremail(formValues.email);
     setMessage(formJson);
   }
+
   return (
     <div className={style.sidebar}>
       <h3>Sign-in</h3>
       {JSON.stringify(message) === "null" ? (
-        <div className="d-none">{JSON.stringify(message)}</div>
+        <span className="d-none null-text">{JSON.stringify(message)}</span>
+      ) : message.name ? (
+        <ToastNotification toastText={`Hi ${message.name},you're logged in`} />
       ) : (
-        <div className="signed">Hi {message.name},You're now logged in</div>
+        <ToastNotification toastText={message} />
       )}
       <Formik
         initialValues={initialValues}

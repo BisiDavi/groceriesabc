@@ -28,7 +28,7 @@ export default async function signup(
             email,
             password: hash
           });
-          res.status(201).json({ success: true, data: user });
+          res.status(201).json(user);
         });
       } catch (error) {
         res

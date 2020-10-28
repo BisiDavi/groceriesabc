@@ -3,13 +3,24 @@ import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function ToastNotification(props:any) {
-  const notify = () => toast(props.toastText);
+const ToastNotification = (props: any) => {
+  const notify = () =>
+    toast.success(props.toastText, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
 
   return (
     <div>
-      <button onClick={notify}>{props.buttonText}</button>
+      {notify()}
       <ToastContainer />
     </div>
   );
-}
+};
+
+export default ToastNotification;
