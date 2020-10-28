@@ -1,34 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
 import style from "../styles/sidebar.module.css";
+import { useRouter } from "next/router";
 
 interface ISigninform {
   email: string;
   password: string;
 }
 
+const useUser = () => ({ user: null, loading: false });
+
+function loadAdminPage() {
+  const { user, loading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!(user || loading)) {
+      router.push("/admin");
+    }
+  }, [user, loading]);
+
+  return <p>Redirecting ...</p>;
+}
+
 const SigninSidebar: React.FC<{}> = (): JSX.Element => {
+  const [message, setMessage] = useState(null);
   const initialValues: ISigninform = {
     email: "",
     password: ""
   };
-  async function handleLogin() {
-    const resp = await fetch("http:localhost:3000/api/login", {
+  async function handleLogin(formValues: ISigninform) {
+    const resp = await fetch("http://localhost:3000/api/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        email: "",
-        password: ""
-      })
+      body: JSON.stringify(formValues, null, 2)
     });
+    // if (resp) loadAdminPage();
     const formJson = await resp.json();
+    setUseremail(formValues.email);
+    setMessage(formJson);
   }
   return (
     <div className={style.sidebar}>
       <h3>Sign-in</h3>
+      {JSON.stringify(message) === "null" ? (
+        <div className="d-none">{JSON.stringify(message)}</div>
+      ) : (
+        <div className="signed">Hi {message.name},You're now logged in</div>
+      )}
       <Formik
         initialValues={initialValues}
         validate={values => {
@@ -40,17 +62,21 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
           ) {
             errors.email = "Invalid email Address";
           }
+          if (!values.password) {
+            errors.password = "Pasword Required";
+          }
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            handleLogin(values);
+            // alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }, 400);
         }}
       >
         {({ isSubmitting }) => (
-          <Form className={`${style.form} signin-form p-3 bg-dark`}>            
+          <Form className={`${style.form} signin-form p-3 bg-dark`}>
             <div className="form-group">
               <label
                 className="float-left text-white"
@@ -69,7 +95,11 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
               <small id="emailHelp" className="form-text text-muted">
                 We'll never share your email with anyone else.
               </small>
-              <ErrorMessage name="email" component="div" />
+              <ErrorMessage
+                className="font-weight-bold text-danger"
+                name="email"
+                component="div"
+              />
             </div>
             <div className="form-group">
               <label
@@ -85,7 +115,11 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
                 id="exampleInputPassword1"
                 placeholder="Password"
               />
-              <ErrorMessage name="email" component="div" />
+              <ErrorMessage
+                className="font-weight-bold text-danger"
+                name="password"
+                component="div"
+              />
             </div>
 
             <button

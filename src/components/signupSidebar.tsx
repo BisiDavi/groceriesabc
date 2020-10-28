@@ -4,24 +4,48 @@ import { Formik, ErrorMessage, Form, Field, FieldProps } from "formik";
 import style from "../styles/sidebar.module.css";
 
 interface ISignupform {
-  username: string;
+  name: string;
   email: string;
   password: string;
 }
 
 const SignupSidebar: React.FC<{}> = () => {
+  const [message, setMessage] = useState(null);
   const initialValues: ISignupform = {
-    username: ``,
+    name: ``,
     email: ``,
     password: ``
   };
+  async function handleLogin(formValues: ISignupform) {
+    const resp = await fetch("http://localhost:3000/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formValues)
+    });
+    const formJson = await resp.json();
+    setMessage(formJson);
+    console.log("formJson", formJson);
+  }
   return (
     <div className={style.sidebar}>
       <h3>Sign-up</h3>
+      {message === "null" ? (
+        <div className="d-none">{JSON.stringify(message)}</div>
+      ) : (
+        <div className="signed">
+          Hi {JSON.stringify(message)},Thanks for signing in, you will be
+          redirected to login page.
+        </div>
+      )}
       <Formik
         initialValues={initialValues}
         validate={values => {
           const errors: any = {};
+          if (!values.name) {
+            errors.name = "Username Required";
+          }
           if (!values.email) {
             errors.email = "Email Required";
           } else if (
@@ -29,11 +53,14 @@ const SignupSidebar: React.FC<{}> = () => {
           ) {
             errors.email = "Invalid email Address";
           }
+          if (!values.password) {
+            errors.password = "Password Required";
+          }
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            handleLogin(values);
             setSubmitting(false);
           }, 400);
         }}
@@ -48,14 +75,18 @@ const SignupSidebar: React.FC<{}> = () => {
                 Username
               </label>
               <Field
-                name="username"
+                name="name"
                 type="name"
                 className="form-control"
                 id="exampleInputname"
                 aria-describedby="nameHelp"
                 placeholder="Enter username"
               />
-              <ErrorMessage name="username" component="div" />
+              <ErrorMessage
+                className="font-weight-bold text-danger"
+                name="name"
+                component="div"
+              />
             </div>
             <div className="form-group">
               <label
@@ -72,7 +103,11 @@ const SignupSidebar: React.FC<{}> = () => {
                 aria-describedby="emailHelp"
                 placeholder="Enter email"
               />
-              <ErrorMessage name="email" component="div" />
+              <ErrorMessage
+                className="font-weight-bold text-danger"
+                name="email"
+                component="div"
+              />
               <small id="emailHelp" className="form-text text-muted">
                 We'll never share your email with anyone else.
               </small>
@@ -91,7 +126,11 @@ const SignupSidebar: React.FC<{}> = () => {
                 id="exampleInputPassword1"
                 placeholder="Password"
               />
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage
+                className="font-weight-bold text-danger"
+                name="password"
+                component="div"
+              />
             </div>
 
             <button

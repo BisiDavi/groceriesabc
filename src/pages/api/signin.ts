@@ -35,11 +35,11 @@ export default async function signin(
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== "development",
                 sameSite: "strict",
-                maxAge: 3600, 
-                path: '/'
+                maxAge: 3600,
+                path: "/"
               })
             );
-            res.json({ message: "You are logged in, welcome" });
+            res.json(user);
           } else {
             res.json({ message: "password doesn't match" });
           }
