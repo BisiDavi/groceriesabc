@@ -4,9 +4,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
 import style from "../styles/sidebar.module.css";
-import ToastNotification from "./toast";
-import LoadAdminPage from "./loadAdminPage";
-import { siteNameEnvironment } from "./siteEnv";
+import { signupAlert } from "./toast";
+import { FormExtra, Signin } from "./formAuth";
 
 interface ISigninform {
   email: string;
@@ -15,14 +14,7 @@ interface ISigninform {
 
 const SigninSidebar: React.FC<{}> = (): JSX.Element => {
   const [message, setMessage] = useState(null);
-  const useUser = () => ({ user: null, loading: false });
-  const { user, loading } = useUser();
 
-  useEffect(() => {
-    if (!(user || loading)) {
-      router.push("/admin");
-    }
-  }, [user, loading]);
   const initialValues: ISigninform = {
     email: "",
     password: ""
@@ -30,27 +22,13 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
 
   const router = useRouter();
 
-  async function handleLogin(formValues: ISigninform) {
-    const resp = await fetch(`${siteNameEnvironment}/api/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formValues, null, 2)
-    });
-    const formJson = await resp.json();
-    setMessage(formJson);
-  }
-
   return (
     <div className={style.sidebar}>
       <h3>Sign-in</h3>
       {JSON.stringify(message) === "null" ? (
         <span className="d-none null-text">{JSON.stringify(message)}</span>
-      ) : message.name ? (
-        <ToastNotification toastText={`Hi ${message.name},you're logged in`} />
       ) : (
-        <ToastNotification toastText={message} />
+        <div className="sign-in">{signupAlert(message)}</div>
       )}
       <Formik
         initialValues={initialValues}
@@ -69,8 +47,11 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          handleLogin(values);
-          router.push("/admin");
+          const formValues = Signin(values);
+          setMessage(formValues);
+          if (formValues) {
+            return router.push("/admin");
+          }
           setSubmitting(false);
         }}
       >
@@ -132,17 +113,7 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
         )}
       </Formik>
 
-      <div className="alternative mt-3 mb-5">
-        <h6 className="text-center">Or do you want to Sign up ?</h6>
-      </div>
-
-      <div className="signup-login mt-5">
-        <div className="m-auto">
-          <Link href="/auth/signup">
-            <a className="btn btn-outline-danger w-50">Sign up</a>
-          </Link>
-        </div>
-      </div>
+      <FormExtra formType="Sign up" />
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { NextPageContext } from "next";
-import Router from "next/router";
 import { siteNameEnvironment } from "../components/siteEnv";
 import { myGet } from "./api/getUser";
 

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Formik, ErrorMessage, Form, Field } from "formik";
+import { useRouter } from "next/router";
 import style from "../styles/sidebar.module.css";
-import ToastNotification from "./toast";
-import { siteNameEnvironment } from "./siteEnv";
+import { signupAlert } from "./toast";
+import { FormExtra, Signup } from "./formAuth";
 
 interface ISignupform {
   name: string;
@@ -18,31 +19,16 @@ const SignupSidebar: React.FC<{}> = () => {
     email: ``,
     password: ``
   };
-  async function handleLogin(formValues: ISignupform) {
-    
-    const resp = await fetch(`${siteNameEnvironment}/api/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formValues)
-    });
-    const formJson = await resp.json();
-    setMessage(formJson);
-    console.log("formJson", formJson);
-  }
+
+  const router = useRouter();
+
   return (
     <div className={style.sidebar}>
       <h3>Sign-up</h3>
       {JSON.stringify(message) === "null" ? (
         <div className="d-none">{JSON.stringify(message)}</div>
       ) : (
-        <div className="signed">
-          <ToastNotification
-            toastText={`Hi ${message.name},Thanks for signing in, you will be redirected to
-          login page.`}
-          />
-        </div>
+        <div className="sign-up">{signupAlert(message)}</div>
       )}
       <Formik
         initialValues={initialValues}
@@ -64,10 +50,13 @@ const SignupSidebar: React.FC<{}> = () => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            handleLogin(values);
-            setSubmitting(false);
-          }, 400);
+          const formValues = Signup(values);
+          setMessage(formValues);
+          console.log(message, "onsubmit message");
+          if (formValues) {
+            return router.push("/auth/signin");
+          }
+          setSubmitting(false);
         }}
       >
         {({ isSubmitting }) => (
@@ -135,7 +124,7 @@ const SignupSidebar: React.FC<{}> = () => {
                 className="font-weight-bold text-danger"
                 name="password"
                 component="div"
-              /> 
+              />
             </div>
 
             <button
@@ -149,17 +138,7 @@ const SignupSidebar: React.FC<{}> = () => {
         )}
       </Formik>
 
-      <div className="alternative mt-3 mb-5">
-        <h6 className="text-center">Or do you want to Sign in?</h6>
-      </div>
-
-      <div className="signup-login mt-5">
-        <div className="m-auto">
-          <Link href="/auth/signin">
-            <a className="btn btn-outline-primary w-50">Sign in</a>
-          </Link>
-        </div>
-      </div>
+      <FormExtra formType="Sign in" />
     </div>
   );
 };

@@ -21,21 +21,32 @@ export default async function signup(
       }
       break;
     case "POST":
-      try {
-        hash(password, 10, async function (err, hash: any) {
-          const user = await User.create({
-            name,
-            email,
-            password: hash
+      const existingEmail: string = await User.findOne({ email: email });
+
+      if (!existingEmail) {
+        try {
+          hash(password, 10, async function (err, hash: any) {
+            const user = await User.create({
+              name,
+              email,
+              password: hash
+            });
+            res.status(201).json(user);
           });
-          res.status(201).json(user);
-        });
-      } catch (error) {
+        } catch (error) {
+          res
+            .status(400)
+            .json({ success: false, message: "we only support POST" });
+        }
+      } else {
         res
           .status(400)
-          .json({ success: false, message: "we only support POST" });
+          .json({
+            message: "You aleady, have an account with us, please Sign-in."
+          });
       }
       break;
+
     default:
       res.status(400).json({ success: false });
       break;

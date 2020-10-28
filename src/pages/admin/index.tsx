@@ -1,19 +1,9 @@
 import React from "react";
-import { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../middlewares/database";
-import User from "../../models/User";
-import { authenticated } from "../../components/routeAuthenticate";
+import { siteNameEnvironment } from "../../components/siteEnv";
+import { NextPageContext } from "next";
+import { myGet } from "../api/getUser";
 
 const Admin = (): JSX.Element => {
-  /* authenticated(async function getUsers(
-    req: NextApiRequest,
-    res: NextApiResponse
-  ) {
-    await dbConnect();
-    const users = await User.find({});
-    res.status(200).json({ success: true, data: users });
-  });
- */
   return (
     <div className="admin-page">
       <h1> I am the admin page</h1>
@@ -22,3 +12,9 @@ const Admin = (): JSX.Element => {
 };
 
 export default Admin;
+
+Admin.getInitialProps = async (ctx: NextPageContext) => {
+  const userOrderJson = await myGet(`${siteNameEnvironment}/api/users`, ctx);
+  console.log(userOrderJson)
+  return { order: userOrderJson };
+};

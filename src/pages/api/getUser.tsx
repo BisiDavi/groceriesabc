@@ -1,5 +1,6 @@
 import { NextPageContext } from "next";
 import Router from "next/router";
+import { siteNameEnvironment } from "../../components/siteEnv";
 
 
 export async function myGet(url: string, ctx: NextPageContext) {
@@ -17,7 +18,7 @@ export async function myGet(url: string, ctx: NextPageContext) {
 
   if (resp.status === 401 && ctx.req) {
     ctx.res?.writeHead(302, {
-      Location: "http://localhost:3000/auth/signin"
+      Location: `${siteNameEnvironment}/auth/signin`
     });
     ctx.res?.end();
     return;
