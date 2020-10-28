@@ -25,6 +25,7 @@
     "next": "9.5.5",
     "next-connect": "^0.9.1",
     "next-images": "^1.6.0",
+    "nextjs-progressbar": "^0.0.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "react": "16.14.0",

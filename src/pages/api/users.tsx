@@ -1,20 +1,7 @@
-import { NextApiRequest, NextApiHandler, NextApiResponse } from "next";
-import { verify } from "jsonwebtoken";
+import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../middlewares/database";
 import User from "../../models/User";
-import { secret } from "./secret";
-
-export const authenticated = (fn: NextApiHandler) => async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => { 
-  verify(req.cookies.auth!, secret, async function (err, decoded) {
-    if (!err && decoded) {
-      return await fn(req, res);
-    }
-    res.status(401).json({ message: "Sorry you are not authenticated" });
-  });
-};
+import { authenticated } from "../../components/routeAuthenticate";
 
 export default authenticated(async function getUsers(
   req: NextApiRequest,

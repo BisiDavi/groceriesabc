@@ -14,34 +14,39 @@ interface ISigninform {
 
 const useUser = () => ({ user: null, loading: false });
 
-function loadAdminPage() {
-  const { user, loading } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!(user || loading)) {
-      router.push("/admin");
-    }
-  }, [user, loading]);
-
-  return <p>Redirecting ...</p>;
-}
-
 const SigninSidebar: React.FC<{}> = (): JSX.Element => {
   const [message, setMessage] = useState(null);
   const initialValues: ISigninform = {
     email: "",
     password: ""
   };
+
+  function loadAdminPage() {
+    const { user, loading } = useUser();
+    const router = useRouter();
+    useEffect(() => {
+      if (!(user || loading)) {
+        router.push("/admin");
+      }
+    }, [user, loading]);
+
+    return <p>Redirecting ...</p>;
+  }
+
   async function handleLogin(formValues: ISigninform) {
-    const resp = await fetch("http://localhost:3000/api/signin", {
+    const siteNameEnvironment =
+      process.env.NODE_ENV === "production"
+        ? process.env.SITE_NAME
+        : "http://localhost:3000";
+
+    const resp = await fetch(`${siteNameEnvironment}/api/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(formValues, null, 2)
     });
-    // if (resp) loadAdminPage();
+    if (resp) loadAdminPage();
     const formJson = await resp.json();
     setMessage(formJson);
   }

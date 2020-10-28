@@ -18,7 +18,12 @@ const SignupSidebar: React.FC<{}> = () => {
     password: ``
   };
   async function handleLogin(formValues: ISignupform) {
-    const resp = await fetch("http://localhost:3000/api/signup", {
+    const siteNameEnvironment =
+      process.env.NODE_ENV === "production"
+        ? process.env.SITE_NAME
+        : "http://localhost:3000";
+        
+    const resp = await fetch(`${siteNameEnvironment}/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

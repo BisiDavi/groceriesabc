@@ -1,4 +1,5 @@
 import { AppProps } from "next/app";
+import NextNprogress from "nextjs-progressbar";
 import "../styles/globals.css";
 
 /* import { createStore, applyMiddleware } from "redux";
@@ -12,8 +13,13 @@ const store = createStore(
   )
 ); */
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  return (
+    <>
+      <Component {...pageProps} />
+      <NextNprogress  />
+    </>
+  );
 }
 
 export default MyApp;
