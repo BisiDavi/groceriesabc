@@ -37,7 +37,7 @@ export async function Signup(formValues: ISignupform) {
 }
 
 export const FormExtra = ({ formType }) => {
-  const formLink = formType.replace(" ", "").toLowercase;
+  const formLink = formType.replace(" ", "").toLowerCase();
   return (
     <>
       <div className="alternative mt-3 mb-5">
