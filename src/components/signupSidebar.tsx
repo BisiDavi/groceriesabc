@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import style from "../styles/sidebar.module.css";
 import ToastNotification from "./toast";
+import { siteNameEnvironment } from "./siteEnv";
 
 interface ISignupform {
   name: string;
@@ -18,11 +19,7 @@ const SignupSidebar: React.FC<{}> = () => {
     password: ``
   };
   async function handleLogin(formValues: ISignupform) {
-    const siteNameEnvironment =
-      process.env.NODE_ENV === "production"
-        ? process.env.SITE_NAME
-        : "http://localhost:3000";
-        
+    
     const resp = await fetch(`${siteNameEnvironment}/api/signup`, {
       method: "POST",
       headers: {

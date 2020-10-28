@@ -1,44 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
 import style from "../styles/sidebar.module.css";
 import ToastNotification from "./toast";
+import LoadAdminPage from "./loadAdminPage";
+import { siteNameEnvironment } from "./siteEnv";
 
 interface ISigninform {
   email: string;
   password: string;
 }
 
-const useUser = () => ({ user: null, loading: false });
-
 const SigninSidebar: React.FC<{}> = (): JSX.Element => {
   const [message, setMessage] = useState(null);
+  const useUser = () => ({ user: null, loading: false });
+  const { user, loading } = useUser();
+
+  useEffect(() => {
+    if (!(user || loading)) {
+      router.push("/admin");
+    }
+  }, [user, loading]);
   const initialValues: ISigninform = {
     email: "",
     password: ""
   };
 
-  function loadAdminPage() {
-    const { user, loading } = useUser();
-    const router = useRouter();
-    useEffect(() => {
-      if (!(user || loading)) {
-        router.push("/admin");
-      }
-    }, [user, loading]);
-
-    return <p>Redirecting ...</p>;
-  }
+  const router = useRouter();
 
   async function handleLogin(formValues: ISigninform) {
-    const siteNameEnvironment =
-      process.env.NODE_ENV === "production"
-        ? process.env.SITE_NAME
-        : "http://localhost:3000";
-
     const resp = await fetch(`${siteNameEnvironment}/api/signin`, {
       method: "POST",
       headers: {
@@ -46,7 +38,6 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
       },
       body: JSON.stringify(formValues, null, 2)
     });
-    if (resp) loadAdminPage();
     const formJson = await resp.json();
     setMessage(formJson);
   }
@@ -78,11 +69,9 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            handleLogin(values);
-            // alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          handleLogin(values);
+          router.push("/admin");
+          setSubmitting(false);
         }}
       >
         {({ isSubmitting }) => (

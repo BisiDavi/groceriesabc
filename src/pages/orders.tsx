@@ -1,5 +1,6 @@
 import { NextPageContext } from "next";
 import Router from "next/router";
+import { siteNameEnvironment } from "../components/siteEnv";
 import { myGet } from "./api/getUser";
 
 export default function Orders({ order }: any) {
@@ -11,6 +12,6 @@ export default function Orders({ order }: any) {
 }
 
 Orders.getInitialProps = async (ctx: NextPageContext) => {
-  const userOrderJson = await myGet("http://localhost:3000/api/users", ctx);
+  const userOrderJson = await myGet(`${siteNameEnvironment}/api/users`, ctx);
   return { order: userOrderJson };
 };
