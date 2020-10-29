@@ -20,23 +20,29 @@ const initialState: IGroceryState = {
 export const incrementReducer = (
   state = initialState,
   action: IncreaseQuantityActionTypes
-) => {
+): IGroceryState => {
   const { type, payload } = action;
   switch (type) {
     case APPLE:
-      let increasedApple = payload.value.quantity + 1;
+      let appleInventory = payload.value[0];
+      const increasedApple = appleInventory.quantity + 1;
+      appleInventory = { ...appleInventory, quantity: increasedApple };
       return {
-        inventory: [...state.inventory, increasedApple]
+        inventory: [...state.inventory]
       };
     case ORANGE:
-      let increasedOrange = payload.value.quantity + 1;
+      let orangeInventory = payload.value[1];
+      const increasedOrange = orangeInventory.quantity + 1;
+      orangeInventory = { ...orangeInventory, quantity: increasedOrange };
       return {
-        inventory: [...state.inventory, increasedOrange]
+        inventory: [...state.inventory]
       };
     case PRINGLE:
-      let increasedPringle = payload.value.quantity + 1;
+      let pringleInventory = payload.value[2];
+      const increasedPringle = pringleInventory.quantity + 1;
+      pringleInventory = { ...pringleInventory, quantity: increasedPringle };
       return {
-        inventory: [...state.inventory, increasedPringle]
+        inventory: [...state.inventory]
       };
 
     default:
@@ -46,24 +52,30 @@ export const incrementReducer = (
 
 export const decrementReducer = (
   state = initialState,
-  action: DecreaseQuantityActionTypes
-) => {
+  action: IncreaseQuantityActionTypes
+): IGroceryState => {
   const { type, payload } = action;
   switch (type) {
     case APPLE:
-      let decreasedApple = payload.value.quantity - 1;
+      let appleInventory = payload.value[0];
+      const increasedApple = appleInventory.quantity - 1;
+      appleInventory = { ...appleInventory, quantity: increasedApple };
       return {
-        inventory: [...state.inventory, decreasedApple]
+        inventory: [...state.inventory]
       };
     case ORANGE:
-      let decreasedOrange = payload.value.quantity - 1;
+      let orangeInventory = payload.value[1];
+      const increasedOrange = orangeInventory.quantity - 1;
+      orangeInventory = { ...orangeInventory, quantity: increasedOrange };
       return {
-        inventory: [...state.inventory, decreasedOrange]
+        inventory: [...state.inventory]
       };
     case PRINGLE:
-      let decreasedPringle = payload.value.quantity - 1;
+      let pringleInventory = payload.value[2];
+      const increasedPringle = pringleInventory.quantity - 1;
+      pringleInventory = { ...pringleInventory, quantity: increasedPringle };
       return {
-        inventory: [...state.inventory, decreasedPringle]
+        inventory: [...state.inventory]
       };
 
     default:
@@ -78,19 +90,25 @@ export const costReducer = (
   const { type, payload } = action;
   switch (type) {
     case APPLE:
-      let appleCost = payload.value.quantity * payload.value.price;
+      let appleInventory = payload.value[0];
+      const appleCost = appleInventory.quantity * appleInventory.price;
+      appleInventory = { ...appleInventory, cost: appleCost };
       return {
-        inventory: [...state.inventory, appleCost]
+        inventory: [state.inventory]
       };
     case ORANGE:
-      let decreasedOrange = payload.value.quantity - 1;
+      let orangeInventory = payload.value[1];
+      const orangeCost = orangeInventory.quantity * orangeInventory.price;
+      orangeInventory = { ...orangeInventory, cost: orangeCost };
       return {
-        inventory: [...state.inventory, decreasedOrange]
+        inventory: [state.inventory]
       };
     case PRINGLE:
-      let decreasedPringle = payload.value.quantity - 1;
+      let pringleInventory = payload.value[2];
+      const pringleCost = pringleInventory.quantity * pringleInventory.price;
+      pringleInventory = { ...pringleInventory, cost: pringleCost };
       return {
-        inventory: [...state.inventory, decreasedPringle]
+        inventory: [state.inventory]
       };
     default:
       return state;
