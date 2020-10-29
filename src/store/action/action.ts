@@ -1,21 +1,42 @@
-export const INCREASE_ORDER = "INCREASE_ORDER";
-export const DECREASE_ORDER = "DEREASE_ORDER";
-export const PRICE_ORDER = "PRICE_ORDER";
+import {
+  IncreaseQuantityActionTypes,
+  DecreaseQuantityActionTypes,
+  MultiplyQuantityActionTypes,
+  IGroceryStore,
+  INCREASE_QUANTITY,
+  DECREASE_QUANTITY,
+  MULTIPLY_QUANTITY
+} from "../types/types";
 
+export const increaseGroceryQuantity = (
+  grocery: IGroceryStore
+): IncreaseQuantityActionTypes => {
+  return {
+    type: INCREASE_QUANTITY,
+    payload: {
+      value: grocery
+    }
+  };
+};
 
-export interface Menu {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  cost: number;
-}
+export const decreaseGroceryQuantity = (
+  grocery: IGroceryStore
+): DecreaseQuantityActionTypes => {
+  return {
+    type: DECREASE_QUANTITY,
+    payload: {
+      value: grocery
+    }
+  };
+};
 
-export const increment = () => {
- 
-}
-
-export const decrement = () => {
-  
- 
-}
+export const multipleGroceryQuantity = (
+  grocery: IGroceryStore
+): MultiplyQuantityActionTypes => {
+  return {
+    type: MULTIPLY_QUANTITY,
+    payload: {
+      value: grocery
+    }
+  };
+};
