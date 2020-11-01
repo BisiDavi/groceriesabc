@@ -2,29 +2,18 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { apple, orange, pringles, OrderModal } from "../imports";
 import style from "../styles/sidebar.module.css";
+import { decrementDispatch, incrementDispatch } from "../store/action/action";
 
-interface Menu {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  cost: number;
-}
-
-const Sidebar = (): JSX.Element => {
-  const [groceriesData, setGroceriesData] = useState<Menu[]>([
-    { id: 0, name: "Apple", price: 100, count: 0, cost: 0 },
-    { id: 1, name: "Orange", price: 50, count: 0, cost: 0 },
-    { id: 2, name: "Pringle", price: 500, count: 0, cost: 0 }
-  ]);
-
+const Sidebar = ({ grocery }): JSX.Element => {
+  
   const [show, setShow] = useState<boolean>(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const displayItem = (index: number): JSX.Element => {
-    switch (groceriesData[index].name) {
+    console.log("it was clicked", grocery[index].name);
+    switch (grocery[index].name) {
       case "Apple":
         return <img className={style.appleImg} src={apple} />;
       case "Orange":
@@ -34,40 +23,13 @@ const Sidebar = (): JSX.Element => {
       default:
         break;
     }
-    return (
-      <style jsx>
-        {`
-          .groceryimages .item {
-            width: 100px !important;
-          }
-        `}
-      </style>
-    );
-  };
-
-  const increaseCount = (index: number): any => {
-    const storeData: Menu[] = [...groceriesData];
-    let count: number = storeData[index].count + 1;
-    let cost: number = storeData[index].price * count;
-    storeData[index] = { ...storeData[index], count, cost };
-    setGroceriesData([...storeData]);
-  };
-
-  const decreaseCount = (index: number): any => {
-    const storeData: Menu[] = [...groceriesData];
-    if (storeData[index].count > 0) {
-      let count: number = storeData[index].count - 1;
-      let cost: number = storeData[index].price * count;
-      storeData[index] = { ...storeData[index], count, cost };
-      setGroceriesData([...storeData]);
-    }
   };
 
   return (
     <div className="sidebar">
       <h3>Menu</h3>
       <ul className="list-group">
-        {groceriesData.map(grocery => (
+        {grocery.map((grocery: any) => (
           <li
             className="list-group-item d-flex justify-content-around align-items-center"
             key={grocery.id}
@@ -77,17 +39,17 @@ const Sidebar = (): JSX.Element => {
             </div>
             <div className="controls d-flex justify-content-between align-items-center">
               <button
-                onClick={() => increaseCount(grocery.id)}
+                onClick={() => incrementDispatch(grocery.id)}
                 className="addButton font-weight-bold bg-success border-0"
               >
                 +
               </button>
               <h4>{grocery.name}</h4>
               <span className="number badge badge-primary badge-pill">
-                {grocery.count}
+                {grocery.quantity}
               </span>
               <button
-                onClick={() => decreaseCount(grocery.id)}
+                onClick={() => decrementDispatch(grocery.id)}
                 className="subtractButton font-weight-bold bg-danger border-0"
               >
                 -

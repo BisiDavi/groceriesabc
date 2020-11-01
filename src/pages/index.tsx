@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 
 import MainContent from "../components/main";
+import { connect } from "react-redux";
 import { Layout, Sidebar } from "../imports";
+import { IGroceryState } from "../store/types/types";
 
-const Homepage = (): JSX.Element => {
+const Homepage = (props): JSX.Element => {
   return (
     <div className="homepage">
       <Layout>
-        <Sidebar />
+        <Sidebar grocery={props.groceryData} />
         <MainContent />
       </Layout>
     </div>
   );
 };
 
-export default Homepage;
+const mapStateToProps = (state: IGroceryState) => {
+  return {
+    groceryData: state.inventory
+  };
+};
+
+export default connect(mapStateToProps, null)(Homepage);

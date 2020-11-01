@@ -49,10 +49,12 @@ const SigninSidebar: React.FC<{}> = (): JSX.Element => {
         onSubmit={(values, { setSubmitting }) => {
           const formValues = Signin(values);
           setMessage(formValues);
-          if (formValues) {
-            return router.push("/admin");
-          }
-          setSubmitting(false);
+          setTimeout(() => {
+            if (formValues) {
+              return router.push("/admin");
+            }
+            setSubmitting(false);            
+          }, 1000);
         }}
       >
         {({ isSubmitting }) => (

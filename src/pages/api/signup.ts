@@ -22,7 +22,7 @@ export default async function signup(
       break;
     case "POST":
       const existingEmail: string = await User.findOne({ email: email });
-
+      console.log(existingEmail)
       if (!existingEmail) {
         try {
           hash(password, 10, async function (err, hash: any) {
@@ -36,7 +36,7 @@ export default async function signup(
         } catch (error) {
           res
             .status(400)
-            .json({ success: false, message: "we only support POST" });
+            .json({ success: false, message: "something is wrong with your sign up" });
         }
       } else {
         res

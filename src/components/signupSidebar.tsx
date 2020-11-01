@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import { useRouter } from "next/router";
 import style from "../styles/sidebar.module.css";
@@ -13,7 +12,7 @@ interface ISignupform {
 }
 
 const SignupSidebar: React.FC<{}> = () => {
-  const [message, setMessage] = useState(null);
+  // const [message, setMessage] = useState(null);
   const initialValues: ISignupform = {
     name: ``,
     email: ``,
@@ -25,11 +24,11 @@ const SignupSidebar: React.FC<{}> = () => {
   return (
     <div className={style.sidebar}>
       <h3>Sign-up</h3>
-      {JSON.stringify(message) === "null" ? (
+      {/* {JSON.stringify(message) === "null" ? (
         <div className="d-none">{JSON.stringify(message)}</div>
       ) : (
         <div className="sign-up">{signupAlert(message)}</div>
-      )}
+      )} */}
       <Formik
         initialValues={initialValues}
         validate={values => {
@@ -51,12 +50,19 @@ const SignupSidebar: React.FC<{}> = () => {
         }}
         onSubmit={(values, { setSubmitting }) => {
           const formValues = Signup(values);
-          setMessage(formValues);
-          console.log(message, "onsubmit message");
-          if (formValues) {
-            return router.push("/auth/signin");
-          }
-          setSubmitting(false);
+          formValues.then(function confirmRedirect(result) {
+            if (!result) return <p>loading...</p>;
+            console.log(result.name, "user");
+            signupAlert(result);
+            console.log(formValues, "formValues");
+            setTimeout(() => {
+              return router.push("/auth/signin");
+            }, 8000);
+            setSubmitting(false);
+          });
+          formValues.catch(function signupError(result) {
+            return <div className="sign-up">{signupAlert(result.message)}</div>;
+          });
         }}
       >
         {({ isSubmitting }) => (

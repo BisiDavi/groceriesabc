@@ -10,42 +10,22 @@ export interface IGroceryState {
   inventory: IGroceryStore[];
 }
 
-export const APPLE = "Apple";
-export const ORANGE = "Orange";
-export const PRINGLE = "Pringle";
+export const INCREASE_GROCERY_ITEM = "INCREASE_GROCERY_ITEM";
+export const DECREASE_GROCERY_ITEM = "DECREASE_GROCERY_ITEM";
 
-export const increaseQUANTITY = "@grocery/DECREASE_QUANTITY";
-
-export const INCREASE_QUANTITY = APPLE || ORANGE || PRINGLE || increaseQUANTITY;
-
-interface Iincrease_Quantity {
-  type: typeof INCREASE_QUANTITY;
+interface I_increase_item {
+  type: typeof INCREASE_GROCERY_ITEM;
   payload: {
-    value: IGroceryStore;
+    value: number;
   };
 }
-
-export const decreaseQUANTITY = "@grocery/DECREASE_QUANTITY";
-
-export const DECREASE_QUANTITY = APPLE || ORANGE || PRINGLE || decreaseQUANTITY;
-
-interface Idecrease_Quantity {
-  type: typeof DECREASE_QUANTITY;
+interface I_decrease_item {
+  type: typeof DECREASE_GROCERY_ITEM;
   payload: {
-    value: IGroceryStore;
+    value: number;
   };
 }
+export type groceryReducer =
+  | I_increase_item
+  | I_decrease_item;
 
-export const multiplyQUANTITY = "@grocery/MULTIPLY_QUANTITY";
-export const MULTIPLY_QUANTITY = APPLE || ORANGE || PRINGLE || multiplyQUANTITY;
-
-interface ImultiplyQuantity {
-  type: typeof MULTIPLY_QUANTITY;
-  payload: {
-    value: IGroceryStore;
-  };
-}
-
-export type IncreaseQuantityActionTypes = Iincrease_Quantity;
-export type DecreaseQuantityActionTypes = Idecrease_Quantity;
-export type MultiplyQuantityActionTypes = ImultiplyQuantity;

@@ -1,42 +1,29 @@
-import {
-  IncreaseQuantityActionTypes,
-  DecreaseQuantityActionTypes,
-  MultiplyQuantityActionTypes,
-  IGroceryStore,
-  INCREASE_QUANTITY,
-  DECREASE_QUANTITY,
-  MULTIPLY_QUANTITY
-} from "../types/types";
+import { bindActionCreators } from "redux";
+import { store } from "../store";
+import { INCREASE_GROCERY_ITEM, DECREASE_GROCERY_ITEM } from "../types/types";
 
-export const increaseGroceryQuantity = (
-  grocery: IGroceryStore
-): IncreaseQuantityActionTypes => {
+const incrementGroceryItem = (index: number): any => {
   return {
-    type: INCREASE_QUANTITY,
+    type: INCREASE_GROCERY_ITEM,
     payload: {
-      value: grocery
+      value: index
+    }
+  };
+};
+const decrementGroceryItem = (index: number): any => {
+  return {
+    type: DECREASE_GROCERY_ITEM,
+    payload: {
+      value: index
     }
   };
 };
 
-export const decreaseGroceryQuantity = (
-  grocery: IGroceryStore
-): DecreaseQuantityActionTypes => {
-  return {
-    type: DECREASE_QUANTITY,
-    payload: {
-      value: grocery
-    }
-  };
-};
-
-export const multipleGroceryQuantity = (
-  grocery: IGroceryStore
-): MultiplyQuantityActionTypes => {
-  return {
-    type: MULTIPLY_QUANTITY,
-    payload: {
-      value: grocery
-    }
-  };
-};
+export const incrementDispatch = bindActionCreators(
+  incrementGroceryItem,
+  store.dispatch
+);
+export const decrementDispatch = bindActionCreators(
+  decrementGroceryItem,
+  store.dispatch
+);

@@ -1,12 +1,8 @@
 import {
   IGroceryState,
-  IncreaseQuantityActionTypes,
-  DecreaseQuantityActionTypes,
-  MultiplyQuantityActionTypes,
-  MULTIPLY_QUANTITY,
-  APPLE,
-  ORANGE,
-  PRINGLE
+  groceryReducer,
+  INCREASE_GROCERY_ITEM,
+  DECREASE_GROCERY_ITEM
 } from "../types/types";
 
 const initialState: IGroceryState = {
@@ -17,99 +13,42 @@ const initialState: IGroceryState = {
   ]
 };
 
-export const incrementReducer = (
+export const GroceryReducer = (
   state = initialState,
-  action: IncreaseQuantityActionTypes
+  action: groceryReducer
 ): IGroceryState => {
   const { type, payload } = action;
   switch (type) {
-    case APPLE:
-      let appleInventory = payload.value[0];
-      const increasedApple = appleInventory.quantity + 1;
-      appleInventory = { ...appleInventory, quantity: increasedApple };
-      return {
-        inventory: [...state.inventory]
+    case INCREASE_GROCERY_ITEM: {
+      let newInventory = [...state.inventory];
+      let groceryInventory = newInventory[payload.value];
+      let increasedItem = groceryInventory.quantity + 1;
+      let appleCost = increasedItem * groceryInventory.price;
+      groceryInventory = {
+        ...groceryInventory,
+        quantity: increasedItem,
+        cost: appleCost
       };
-    case ORANGE:
-      let orangeInventory = payload.value[1];
-      const increasedOrange = orangeInventory.quantity + 1;
-      orangeInventory = { ...orangeInventory, quantity: increasedOrange };
+      newInventory[payload.value] = { ...groceryInventory };
       return {
-        inventory: [...state.inventory]
+        inventory: newInventory
       };
-    case PRINGLE:
-      let pringleInventory = payload.value[2];
-      const increasedPringle = pringleInventory.quantity + 1;
-      pringleInventory = { ...pringleInventory, quantity: increasedPringle };
+    }
+    case DECREASE_GROCERY_ITEM: {
+      let newInventory = [...state.inventory];
+      let groceryInventory = newInventory[payload.value];
+      const decreasedItem = groceryInventory.quantity - 1;
+      const newAppleCost = decreasedItem * groceryInventory.price;
+      groceryInventory = {
+        ...groceryInventory,
+        quantity: decreasedItem,
+        cost: newAppleCost
+      };
+      newInventory[payload.value] = { ...groceryInventory };
       return {
-        inventory: [...state.inventory]
+        inventory: newInventory
       };
-
-    default:
-      return state;
-  }
-};
-
-export const decrementReducer = (
-  state = initialState,
-  action: IncreaseQuantityActionTypes
-): IGroceryState => {
-  const { type, payload } = action;
-  switch (type) {
-    case APPLE:
-      let appleInventory = payload.value[0];
-      const increasedApple = appleInventory.quantity - 1;
-      appleInventory = { ...appleInventory, quantity: increasedApple };
-      return {
-        inventory: [...state.inventory]
-      };
-    case ORANGE:
-      let orangeInventory = payload.value[1];
-      const increasedOrange = orangeInventory.quantity - 1;
-      orangeInventory = { ...orangeInventory, quantity: increasedOrange };
-      return {
-        inventory: [...state.inventory]
-      };
-    case PRINGLE:
-      let pringleInventory = payload.value[2];
-      const increasedPringle = pringleInventory.quantity - 1;
-      pringleInventory = { ...pringleInventory, quantity: increasedPringle };
-      return {
-        inventory: [...state.inventory]
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const costReducer = (
-  state = initialState,
-  action: MultiplyQuantityActionTypes
-) => {
-  const { type, payload } = action;
-  switch (type) {
-    case APPLE:
-      let appleInventory = payload.value[0];
-      const appleCost = appleInventory.quantity * appleInventory.price;
-      appleInventory = { ...appleInventory, cost: appleCost };
-      return {
-        inventory: [state.inventory]
-      };
-    case ORANGE:
-      let orangeInventory = payload.value[1];
-      const orangeCost = orangeInventory.quantity * orangeInventory.price;
-      orangeInventory = { ...orangeInventory, cost: orangeCost };
-      return {
-        inventory: [state.inventory]
-      };
-    case PRINGLE:
-      let pringleInventory = payload.value[2];
-      const pringleCost = pringleInventory.quantity * pringleInventory.price;
-      pringleInventory = { ...pringleInventory, cost: pringleCost };
-      return {
-        inventory: [state.inventory]
-      };
+    }
     default:
       return state;
   }
