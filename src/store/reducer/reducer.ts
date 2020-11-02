@@ -16,7 +16,7 @@ const initialState: IGroceryState = {
 export const GroceryReducer = (
   state = initialState,
   action: groceryReducer
-): IGroceryState => {
+): any => {
   const { type, payload } = action;
   switch (type) {
     case INCREASE_GROCERY_ITEM: {
@@ -37,17 +37,19 @@ export const GroceryReducer = (
     case DECREASE_GROCERY_ITEM: {
       let newInventory = [...state.inventory];
       let groceryInventory = newInventory[payload.value];
-      const decreasedItem = groceryInventory.quantity - 1;
-      const newAppleCost = decreasedItem * groceryInventory.price;
-      groceryInventory = {
-        ...groceryInventory,
-        quantity: decreasedItem,
-        cost: newAppleCost
-      };
-      newInventory[payload.value] = { ...groceryInventory };
-      return {
-        inventory: newInventory
-      };
+      if (groceryInventory.quantity > 0) {
+        const decreasedItem = groceryInventory.quantity - 1;
+        const newAppleCost = decreasedItem * groceryInventory.price;
+        groceryInventory = {
+          ...groceryInventory,
+          quantity: decreasedItem,
+          cost: newAppleCost
+        };
+        newInventory[payload.value] = { ...groceryInventory };
+        return {
+          inventory: newInventory
+        };
+      }
     }
     default:
       return state;

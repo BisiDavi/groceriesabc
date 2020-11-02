@@ -5,7 +5,6 @@ import style from "../styles/sidebar.module.css";
 import { decrementDispatch, incrementDispatch } from "../store/action/action";
 
 const Sidebar = ({ grocery }): JSX.Element => {
-  
   const [show, setShow] = useState<boolean>(false);
 
   const handleClose = () => setShow(false);
@@ -14,12 +13,15 @@ const Sidebar = ({ grocery }): JSX.Element => {
   const displayItem = (index: number): JSX.Element => {
     console.log("it was clicked", grocery[index].name);
     switch (grocery[index].name) {
-      case "Apple":
+      case "Apple": {
         return <img className={style.appleImg} src={apple} />;
-      case "Orange":
+      }
+      case "Orange": {
         return <img className={style.orangeImg} src={orange} />;
-      case "Pringle":
+      }
+      case "Pringle": {
         return <img className={style.pringlesImg} src={pringles} />;
+      }
       default:
         break;
     }

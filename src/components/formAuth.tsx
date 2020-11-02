@@ -54,3 +54,17 @@ export const FormExtra = ({ formType }) => {
     </>
   );
 };
+
+/* export const showGroceryItem = index: number => {
+  switch (grocery[index].name) {
+    case "Apple":
+      return <img className={style.appleImg} src={apple} />;
+    case "Orange":
+      return <img className={style.orangeImg} src={orange} />;
+    case "Pringle":
+      return <img className={style.pringlesImg} src={pringles} />;
+    default:
+      break;
+  }
+};
+ */

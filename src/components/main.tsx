@@ -2,11 +2,11 @@ import React from "react";
 import { CartImg } from "../imports";
 
 const MainContent = (): JSX.Element => {
-  
-
   return (
     <div className="main-app">
-      <img src={CartImg} alt="content-table" />     
+
+      <img src={CartImg} alt="content-table" />
+
       <style jsx>
         {`
           .main-app img {
